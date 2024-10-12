@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from main.models import Category
 
 
 # Create your views here.
@@ -38,3 +39,9 @@ def log_out(request):
     logout(request)
     return redirect('/')
 
+
+def view_category(request):
+    data = {
+        'categories': Category.objects.all()
+    }
+    return render(request, 'main/Category.html', context=data)
