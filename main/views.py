@@ -1,14 +1,17 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from main.models import Category
+from main.models import Category, Item
 
 
 # Create your views here.
 
 
 def index(request):
-    return render(request, 'main/index.html')
+    data = {
+        'categories': Category.objects.all()
+    }
+    return render(request, 'main/index.html', context=data)
 
 
 def login_page(request):
@@ -40,8 +43,12 @@ def log_out(request):
     return redirect('/')
 
 
-def view_category(request):
+def view_products_by_category(request, category_name):
+    category = get_object_or_404(Category, name=category_name)
+    print(category)
+    products = Item.objects.filter(category=category)
     data = {
-        'categories': Category.objects.all()
+        'categories': category,
+        'products': products
     }
     return render(request, 'main/Category.html', context=data)

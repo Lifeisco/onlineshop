@@ -43,9 +43,8 @@
             <a class="nav-link active btn hvr-back-pulse btn-lg" aria-current="page" href="{% url 'login' %}"><i class="fa-sharp fa-solid fa-right-to-bracket"></i> Login</a>
           </li>
         {% endif %}
-        <li class="nav-item">
-          <a class="nav-link btn hvr-radial-in btn-lg" href="{% url 'category' %}">Category</a>
-        </li>
+      {% block categorys %}
+      {% endblock %}
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -56,7 +55,8 @@
   </div>
 </nav>
 
-{% block body %}{% endblock %}
+{% block body %}
+{% endblock %}
 
 </body>
 </html>
