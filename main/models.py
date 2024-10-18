@@ -7,7 +7,7 @@ class Item(models.Model):
     description = models.TextField()  # Описание товара
     price = models.DecimalField(max_digits=10, decimal_places=2)  # Цена товара A.BC
     stock = models.PositiveIntegerField()  # Количество товаров на складе
-    category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)  # Категория товара
+    category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)  # Категория товара TODO manytomany
     image = models.ImageField(upload_to='products/', null=True, blank=True)  # Изображение товара
     created_date = models.DateTimeField(auto_now_add=True)  # Время создания записи
     updated_date = models.DateTimeField(auto_now=True)  # Время последнего обновления

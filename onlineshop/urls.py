@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import path
-from main.views import index, login_page, reg_page, log_out, view_products_by_category
+from main.views import index, login_page, reg_page, log_out, view_products_by_category, card
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,5 +27,6 @@ urlpatterns = [
     path('login/', login_page, name='login'),
     path('sign_up/', reg_page, name='register'),
     path('logout/', log_out, name='logout'),
-    path('category/<str:category_name>/', view_products_by_category, name='view_products_by_category')
+    path('category/<str:category_name>/', view_products_by_category, name='view_products_by_category'),
+    path('card/', card, name='card')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

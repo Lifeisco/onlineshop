@@ -5,6 +5,10 @@ from main.models import Category, Item
 
 
 # Create your views here.
+#  TODO пагинацию для вывода каталога товаров
+#  TODO запрашивать только часть товаров, отображаемых на странице(гуглить django orm limit)
+#  TODO отображение страницы карзины в которую пользователь добавил продукты(возможность изменить кол-во вещей)
+#  TODO кнопка 'Оформить закать' -> корзина опустошается -> создается объект заказа
 
 
 def index(request):
@@ -23,6 +27,7 @@ def login_page(request):
 
         if user is not None:
             login(request, user)
+            request.session['card'] = []
             return redirect('/home')
         else:
             error_message = 'Неверное имя пользователя или пароль'
@@ -46,9 +51,19 @@ def log_out(request):
 def view_products_by_category(request, category_name):
     category = get_object_or_404(Category, name=category_name)
     print(category)
-    products = Item.objects.filter(category=category)
+    products = Item.objects.filter(category=category)[0:10]
     data = {
         'categories': category,
         'products': products
     }
     return render(request, 'main/Category.html', context=data)
+
+
+def card(request):
+    data = request.session.get('card', [])
+    if request.method == 'GET':
+        product = request.GET.get('product', False)
+        if product:
+            request.session['card'].append({'id': product,
+                                            'amount': 1})
+    return render(request, 'main/card.html', context=data)
